@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   belongs_to :chat
 
   def self.get_all(application_id, chat_number)
-    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.messages&.all&.as_json(:except => [:id, :lock_version])
+    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.messages&.all&.as_json(:except => [:id, :chat_id, :lock_version])
   end
 
   def self.create_message(application_id, chat_number, body)
@@ -15,10 +15,10 @@ class Message < ApplicationRecord
     @last_message_num = @chat.messages.nil? ? 0 : @chat.messages&.last&.number
     @last_message_num = @last_message_num.nil? ? 1 : @last_message_num + 1
     @message = @chat.messages.create!(body: body, number: @last_message_num)
-    @message.as_json(:except => [:id, :lock_version])
+    @message.as_json(:except => [:id, :chat_id, :lock_version])
   end
 
   def self.get_by_number(application_id, chat_number, message_number)
-    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.messages&.find_by(number: message_number)&.as_json(:except => [:id, :lock_version])
+    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.messages&.find_by(number: message_number)&.as_json(:except => [:id, :chat_id, :lock_version])
   end
 end
