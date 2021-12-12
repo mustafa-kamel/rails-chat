@@ -1,8 +1,7 @@
 class CreateChats < ActiveRecord::Migration[6.1]
   def change
     create_table :chats do |t|
-      t.primary_key :id
-      t.refrences :application, foreign_key: true
+      t.references :application, foreign_key: true
       t.integer :number
       t.integer :messages_count
       t.integer :lock_version
