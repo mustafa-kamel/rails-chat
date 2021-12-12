@@ -15,9 +15,9 @@ class MessagesController < ApplicationController
 
   # POST applications/:application_id/chats/:chat_id/messages
   def create
-    @message = Message.create_message(message_params[:application_id], message_params[:chat_id], message_params[:content])
+    @message = Message.create_message(params[:application_id], params[:chat_id], params[:body])
 
-    if @message.save
+    if @message
       render json: @message, status: :created, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity
@@ -32,6 +32,6 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.require(:message).permit(:chat, :number, :body)
+      params.require(:message).permit(:body)
     end
 end

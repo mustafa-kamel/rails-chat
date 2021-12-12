@@ -10,26 +10,18 @@ class Chat < ApplicationRecord
 
   
   def self.get_all(application_id)
-    Application.find_by(token: application_id)&.chats&.all&.as_json(:except => :id)
+    Application.find_by(token: application_id)&.chats&.all&.as_json(:except => [:id, :lock_version])
   end
 
   def self.create_chat(application_id)
-    @chats = Application.find_by(token: application_id)&.chats
-    return if @chats.nil?
+    @application = Application.find_by(token: application_id)
+    @last_chat_num = @application.chats.nil? ? 0 : @application.chats&.last&.number
+    @last_chat_num = @last_chat_num.nil? ? 1 : @last_chat_num + 1
 
-    @last_chat_num = @chats&.last&.number
-    @last_chat_num = @last_chat_num.nil? ? 0 : @last_chat_num
-    @last_chat_num += 1
-
-    @chat = @chats.create!(number: @last_chat_num)
-
-    @chats[0].application.chats_count = @last_chat_num
-    @chats[0].application.save
-
-    @chat.as_json(:except => :id)
+    @chat = @application.chats.create!(number: @last_chat_num).as_json(:except => [:id, :lock_version])
   end
 
   def self.get_by_number(application_id, chat_number)
-    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.as_json(:except => :id)
+    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.as_json(:except => [:id, :lock_version])
   end
 end
