@@ -1,9 +1,9 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: [:show, :update, :destroy]
+  before_action :set_application, only: [:show]
 
   # GET /applications
   def index
-    @applications = Application.select(:token, :name)
+    @applications = Application.select(:token, :name, :chats_count)
 
     render json: @applications
   end
@@ -27,7 +27,7 @@ class ApplicationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_application
-      @application = Application.find(params[:id], :select => 'token, name')
+      @application = Application.find(params[:id], :select => 'token, name, chats_count')
     end
 
     # Only allow a list of trusted parameters through.
