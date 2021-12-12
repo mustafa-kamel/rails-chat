@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
 
   # GET /applications
   def index
-    @applications = Application.select(:token, :name, :chats_count)
+    @applications = Application.select(:token, :name, :chats_count).as_json(:except => :id)
 
     render json: @applications
   end
@@ -15,10 +15,10 @@ class ApplicationsController < ApplicationController
 
   # POST /applications
   def create
-    @application = Application.new(application_params)
+    @application = Application.select(:token, :name, :chats_count).new(application_params)
 
     if @application.save
-      render json: @application, status: :created, location: @application
+      render json: @application.as_json(:only => [:token, :name, :chats_count]), status: :created, location: @application
     else
       render json: @application.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class ApplicationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_application
-      @application = Application.find(params[:id], :select => 'token, name, chats_count')
+      @application = Application.select(:token, :name, :chats_count).find_by(token: params[:id]).as_json(:except => :id)
     end
 
     # Only allow a list of trusted parameters through.
