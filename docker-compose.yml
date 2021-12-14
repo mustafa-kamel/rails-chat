@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    links:
+      - db
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - sidekiq
+    volumes:
+      - .:/app
+    links:
+      - db
+      - sidekiq
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b
+      '0.0.0.0'"
