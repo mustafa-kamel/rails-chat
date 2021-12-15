@@ -10,11 +10,11 @@ default: &default
   # timeout: 5000
   adapter: mysql2
   encoding: utf8mb4
-  database: rails-chat
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: root
-  host: db
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
   port: 3306
 
 development:
