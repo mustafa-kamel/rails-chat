@@ -12,6 +12,7 @@ class Message < ApplicationRecord
 
   def self.create_message(application_id, chat_number, body)
     @chat = Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)
+    return if @chat.nil?
     @last_message_num = @chat.messages.nil? ? 0 : @chat.messages&.last&.number
     @last_message_num = @last_message_num.nil? ? 1 : @last_message_num + 1
     @message = @chat.messages.create!(body: body, number: @last_message_num)

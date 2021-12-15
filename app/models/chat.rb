@@ -15,10 +15,13 @@ class Chat < ApplicationRecord
 
   def self.create_chat(application_id)
     @application = Application.find_by(token: application_id)
+    return if @application.nil?
     @last_chat_num = @application.chats.nil? ? 0 : @application.chats&.last&.number
     @last_chat_num = @last_chat_num.nil? ? 1 : @last_chat_num + 1
 
     @chat = @application.chats.create!(number: @last_chat_num).as_json(:except => [:id, :application_id, :lock_version])
+    # CreateChatWorker.perform_async(@application, @last_chat_num)
+    # {"chat_number": @last_chat_num}
   end
 
   def self.get_by_number(application_id, chat_number)

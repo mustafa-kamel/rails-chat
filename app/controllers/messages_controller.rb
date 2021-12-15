@@ -20,7 +20,7 @@ class MessagesController < ApplicationController
     if @message
       render json: @message, status: :created, location: @message
     else
-      render json: @message.errors, status: :unprocessable_entity
+      render json: {"error": "Invalid input."}, status: :unprocessable_entity
     end
   end
 
