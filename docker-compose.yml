@@ -3,8 +3,10 @@ services:
   db:
     image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-    command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rails-chat
+    volumes:
+      - db:/var/lib/mysql
 
   redis:
     image: redis:latest
@@ -18,9 +20,6 @@ services:
       - .:/app
     depends_on:
       - redis
-    links:
-      - db
-      - redis
     environment:
       - REDIS_URL=redis://redis:6379
 
@@ -33,8 +32,13 @@ services:
       - sidekiq
     volumes:
       - .:/app
-    links:
-      - db
-      - sidekiq
+    environment:
+      DB_USER: root
+      DB_NAME: rails-chat
+      DB_PASSWORD: password
+      DB_HOST: db
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b
       '0.0.0.0'"
+
+volumes:
+  db: null
