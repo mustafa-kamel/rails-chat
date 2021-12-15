@@ -19,6 +19,7 @@ services:
     volumes:
       - .:/app
     depends_on:
+      - db
       - redis
     environment:
       - REDIS_URL=redis://redis:6379
@@ -29,7 +30,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
-      - sidekiq
+      - redis
     volumes:
       - .:/app
     environment:
@@ -37,6 +38,7 @@ services:
       DB_NAME: rails-chat
       DB_PASSWORD: password
       DB_HOST: db
+      REDIS_URL: redis://redis:6379
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b
       '0.0.0.0'"
 
