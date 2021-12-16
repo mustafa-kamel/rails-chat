@@ -24,6 +24,13 @@ class MessagesController < ApplicationController
     end
   end
 
+  def search
+    puts params
+    query = MessageIndex.search(params[:query].to_s)
+    @results = query.records
+    @total_results = query.total_entries
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_message
