@@ -1,24 +1,86 @@
-# README
+# Rails Chat App
+A chat app built using Ruby on Rails, MySQL, Elastic Search, Redis and SideKiq.
+That allows clients to create applications which may have many chats for their applications according to the following criteria:
+- The client creates a new application, give it a name and get it's token.
+- The client can list all applications or get a specific application by its token.
+- The client can create a new chat in a specific application using its token and get the number of the created chat.
+- The client can list all application's chats or get a specific chat by its number and application token.
+- For each chat the client is able to create new messages by idetifying the application's token and the chat's number.
+- The client can search messages for a specific application and chat.
+- Both the application and the chat have a field that indicates the count of related chats or messages accordingly.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+This app is built using rails-6.1.4.1 and uses a MySQL database.
+It integrates with Elastic Search, SearchFlip, Redis and SideKiq.
 
-* Ruby version
+## Installation
+To get this app up and running you should follow the next steps:
+* Clone the app from github.
+```bash
+git clone https://github.com/mustafa-kamel/rails-chat.git
+```
 
-* System dependencies
+* cd in the repo directory.
+```bash
+cd rails-chat
+```
 
-* Configuration
+* Install dependencies by running.
+```bash
+bundle install
+```
 
-* Database creation
+* Create db and migrate schema.
+```bash
+rake db:create
+rake db:migrate
+```
 
-* Database initialization
+* Run the rails server.
+```bash
+rails s
+```
 
-* How to run the test suite
+* Now you can access the app apis by visiting [localhost:3000](localhost:3000).
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
 
-* ...
+
+* Or simply you can run the app using docker by running:
+```bash
+docker-compose up
+```
+After all containers starts you should now run the database migrations.
+* You can do that simply by visiting [localhost:3000](localhost:3000) from you browser and click on Run pending migrations.
+
+* Or open your terminal and run to list the running containers.
+```bash
+docker ps
+```
+
+* Copy the CONTAINER ID value for the IMAGE `rails-chat_web` then run the following command.
+```bash
+docker exec -it {CONTAINER ID} rails db:migrate
+```
+
+
+* You can list all the available routes by running
+```bash
+rails routes
+```
+
+### API Documentation
+You can view an API documentation for this project on postman by visiting:
+[https://www.getpostman.com/collections/f27d26583531fe8becc4](https://www.getpostman.com/collections/f27d26583531fe8becc4).
+
+
+### Complete features
+* All integrations are done and a docker container from each of (MySQL, Redis, SideKiq, Elasticsearch, rails app) should be created when you run `docker-compose up`.
+* Applications Read/Write.
+* Chats Read/Write.
+* Messages Read/Write.
+
+
+### Incomplete features
+* Indexing the message model is done and elasticsearch service is working, you can ensure that by visiting [localhost:9200](localhost:9200), however there's a problem happens when the model tries to connect to elasticsearch server.
+* Creating the chats and messages using a jobs that runs asynchronously was almost done but a problem happens when the job tries to create a new instance in the MySQL database.
