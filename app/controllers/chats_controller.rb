@@ -15,7 +15,7 @@ class ChatsController < ApplicationController
 
   # POST /applications/:application_id/chats
   def create
-    @last_chat_num = Chat.create_chat(params[:application_id])
+    # @last_chat_num = Chat.create_chat(params[:application_id])
 
     @chat = Chat.create_chat(params[:application_id])
 
