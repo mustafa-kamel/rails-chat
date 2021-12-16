@@ -60,6 +60,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     bootsnap (1.9.3)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -67,11 +69,30 @@ GEM
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crass (1.0.6)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
     erubi (1.10.0)
+    ffi (1.15.4)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     globalid (1.0.0)
       activesupport (>= 5.0)
+    hashie (5.0.0)
+    http (5.0.4)
+      addressable (~> 2.8)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.2)
+      llhttp-ffi (~> 0.4.0)
+    http-cookie (1.0.4)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    json (2.6.1)
+    llhttp-ffi (0.4.0)
+      ffi-compiler (~> 1.0)
+      rake (~> 13.0)
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -86,6 +107,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
+    oj (3.13.10)
+    public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -120,6 +143,13 @@ GEM
       thor (~> 1.0)
     rake (13.0.6)
     redis (4.5.1)
+    ruby2_keywords (0.0.5)
+    search_flip (3.5.0)
+      hashie
+      http
+      json
+      oj
+      ruby2_keywords
     sidekiq (6.3.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -134,6 +164,9 @@ GEM
     thor (1.1.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -149,6 +182,7 @@ DEPENDENCIES
   mysql2 (~> 0.5.3)
   puma (~> 5.0)
   rails (~> 6.1.4, >= 6.1.4.1)
+  search_flip
   sidekiq (~> 6.3)
   tzinfo-data
 
