@@ -14,6 +14,8 @@ This app is built using rails-6.1.4.1 and uses a MySQL database.
 It integrates with Elastic Search, SearchFlip, Redis and SideKiq.
 
 ## Installation
+> Before you install this app you should insure that you have `ruby-3.0.2` or higher installed.
+
 To get this app up and running you should follow the next steps:
 * Clone the app from github.
 ```bash
