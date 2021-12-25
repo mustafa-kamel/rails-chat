@@ -53,7 +53,7 @@ docker-compose up
 After all containers starts you should now run the database migrations.
 * You can do that simply by visiting [localhost:3000](localhost:3000) from you browser and click on Run pending migrations.
 
-* Or open your terminal and run to list the running containers.
+* Or open your terminal and run the following command to list the running containers.
 ```bash
 docker ps
 ```
