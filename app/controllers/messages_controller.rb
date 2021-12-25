@@ -16,7 +16,6 @@ class MessagesController < ApplicationController
   # POST applications/:application_id/chats/:chat_id/messages
   def create
     @message = Message.create_message(params[:application_id], params[:chat_id], params[:body])
-
     if @message
       render json: @message, status: :created, location: @message
     else
