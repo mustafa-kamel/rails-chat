@@ -35,7 +35,7 @@ class MessagesController < ApplicationController
 
   # GET applications/:application_token/chats/:chat_number/search/:query
   def search
-    query = MessageIndex.where(application: params[:application_id]).where(chat: params[:chat_id]).search(params[:query].to_s)
+    query = MessageIndex.search(params[:query].to_s)
     @results = query.records
     @total_results = query.total_entries
     render json: @results.as_json(:except => [:id, :chat_id, :lock_version])
