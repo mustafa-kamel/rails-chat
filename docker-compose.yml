@@ -13,22 +13,6 @@ services:
     ports:
       - "6379:6379"
 
-  sidekiq:
-    build: .
-    command: bundle exec sidekiq
-    volumes:
-      - app_data:/app
-    depends_on:
-      - db
-      - redis
-    environment:
-      REDIS_URL: redis://redis:6379
-      DB_USER: root
-      DB_NAME: rails-chat
-      DB_PASSWORD: password
-      DB_HOST: db
-      ES_URL: http://es:9200
-
   es:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     container_name: es
@@ -50,6 +34,23 @@ services:
       - es_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - app_data:/app
+    depends_on:
+      - db
+      - redis
+      - es
+    environment:
+      DB_USER: root
+      DB_NAME: rails-chat
+      DB_PASSWORD: password
+      DB_HOST: db
+      REDIS_URL: redis://redis:6379
+      ES_URL: http://es:9200
 
   web:
     build: .
