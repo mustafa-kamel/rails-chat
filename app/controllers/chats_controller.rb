@@ -15,18 +15,12 @@ class ChatsController < ApplicationController
 
   # POST /applications/:application_id/chats
   def create
-    # @last_chat_num = Chat.create_chat(params[:application_id])
-
     @chat = Chat.create_chat(params[:application_id])
-
     if @chat
       render json: @chat, status: :created, location: @chat
     else
       render json: {"error": "Invalid input."}, status: :unprocessable_entity
     end
-    # if @last_chat_num
-    #   render json: @last_chat_num, status: :created, location: @last_chat_num
-    # end
   end
 
   private

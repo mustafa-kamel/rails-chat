@@ -1,9 +1,8 @@
 class CreateChatWorker
   include Sidekiq::Worker
 
-  def perform(application, last_chat_num)
-    binding.irb
-    byebug
-    application.chats.create!(number: last_chat_num)
+  def perform(app_token, chat_num)
+    @application = Application.find_by(token: app_token)
+    @application.chats.create!(number: chat_num)
   end
 end

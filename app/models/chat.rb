@@ -9,22 +9,21 @@ class Chat < ApplicationRecord
   has_many :messages, dependent: :destroy
 
   
-  def self.get_all(application_id)
-    Application.find_by(token: application_id)&.chats&.all&.as_json(:except => [:id, :application_id, :lock_version])
+  def self.get_all(app_token)
+    Application.find_by(token: app_token)&.chats&.all&.as_json(:except => [:id, :application_id, :lock_version])
   end
 
-  def self.create_chat(application_id)
-    @application = Application.find_by(token: application_id)
+  def self.create_chat(app_token)
+    @application = Application.find_by(token: app_token)
     return if @application.nil?
     @last_chat_num = @application.chats.nil? ? 0 : @application.chats&.last&.number
     @last_chat_num = @last_chat_num.nil? ? 1 : @last_chat_num + 1
 
-    @chat = @application.chats.create!(number: @last_chat_num).as_json(:except => [:id, :application_id, :lock_version])
-    # CreateChatWorker.perform_async(@application, @last_chat_num)
-    # {"chat_number": @last_chat_num}
+    CreateChatWorker.perform_async(app_token, @last_chat_num)
+    {"number": @last_chat_num}
   end
 
-  def self.get_by_number(application_id, chat_number)
-    Application.find_by(token: application_id)&.chats&.find_by(number: chat_number)&.as_json(:except => [:id, :application_id, :lock_version])
+  def self.get_by_number(app_token, chat_number)
+    Application.find_by(token: app_token)&.chats&.find_by(number: chat_number)&.as_json(:except => [:id, :application_id, :lock_version])
   end
 end
