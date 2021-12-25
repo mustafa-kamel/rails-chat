@@ -22,7 +22,12 @@ services:
       - db
       - redis
     environment:
-      - REDIS_URL=redis://redis:6379
+      REDIS_URL: redis://redis:6379
+      DB_USER: root
+      DB_NAME: rails-chat
+      DB_PASSWORD: password
+      DB_HOST: db
+      ES_URL: http://es:9200
 
   es:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
