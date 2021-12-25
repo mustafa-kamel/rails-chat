@@ -73,14 +73,3 @@ rails routes
 You can view an API documentation for this project on postman by visiting:
 [https://www.getpostman.com/collections/f27d26583531fe8becc4](https://www.getpostman.com/collections/f27d26583531fe8becc4).
 
-
-### Complete features
-* All integrations are done and a docker container from each of (MySQL, Redis, SideKiq, Elasticsearch, rails app) should be created when you run `docker-compose up`.
-* Applications Read/Write.
-* Chats Read/Write.
-* Messages Read/Write.
-
-
-### Incomplete features
-* Indexing the message model is done and elasticsearch service is working, you can ensure that by visiting [localhost:9200](localhost:9200), however there's a problem happens when the model tries to connect to elasticsearch server.
-* Creating the chats and messages using a jobs that runs asynchronously was almost done but a problem happens when the job tries to create a new instance in the MySQL database.
