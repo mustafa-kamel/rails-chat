@@ -1,19 +1,19 @@
 class ChatsController < ApplicationController
   before_action :set_chat, only: [:show, :update]
 
-  # GET /applications/:application_id/chats
+  # GET /applications/:application_token/chats
   def index
     @chats = Chat.get_all(params[:application_id])
 
     render json: @chats
   end
 
-  # GET /applications/:application_id/chats/1
+  # GET /applications/:application_token/chats/:chat_number
   def show
     render json: @chat
   end
 
-  # POST /applications/:application_id/chats
+  # POST /applications/:application_token/chats
   def create
     @chat = Chat.create_chat(params[:application_id])
     if @chat
