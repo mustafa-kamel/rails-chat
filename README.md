@@ -7,7 +7,7 @@ That allows clients to create applications which may have many chats for their a
 - The client can list all application's chats or get a specific chat by its number and application token.
 - For each chat the client is able to create new messages by idetifying the application's token and the chat's number.
 - The client can search messages for a specific application and chat.
-- Both the application and the chat have a field that indicates the count of related chats or messages accordingly.
+- Both the application and the chat have a field that indicates the count of related chats or messages accordingly, those fields are updated hourly.
 
 
 This app is built using rails-6.1.4.1 and uses a MySQL database.
