@@ -1,17 +1,15 @@
 # Rails Chat App
-A chat app built using Ruby on Rails, MySQL, Elastic Search, Redis and SideKiq.
-That allows clients to create applications which may have many chats for their applications according to the following criteria:
-- The client creates a new application, give it a name and get it's token.
+A chat app built using Ruby on Rails, MySQL, Elastic Search, Redis, and SideKiq.
+The app allows clients to create applications that may have many chats for their applications according to the following criteria:
+- The client creates a new application, gives it a name, and gets its token.
 - The client can list all applications or get a specific application by its token.
 - The client can create a new chat in a specific application using its token and get the number of the created chat.
 - The client can list all application's chats or get a specific chat by its number and application token.
-- For each chat the client is able to create new messages by idetifying the application's token and the chat's number.
+- For each chat, the client is able to create new messages by identifying the application's token and the chat's number.
 - The client can search messages for a specific application and chat.
 - Both the application and the chat have a field that indicates the count of related chats or messages accordingly, those fields are updated hourly.
 
-
-This app is built using rails-6.1.4.1 and uses a MySQL database.
-It integrates with Elastic Search, SearchFlip, Redis and SideKiq.
+This app is built using rails-6.1.4.1 and uses a MySQL database. It integrates with Elastic Search, SearchFlip, Redis, and SideKiq.
 
 ## Installation
 > Before you install this app you should insure that you have `ruby-3.0.2` or higher installed.
